@@ -1,6 +1,8 @@
 <?php 
 require_once 'partials/header.php';
 ?>
+<!-- À l'emplacement où tu souhaites afficher l'effet de chargement -->
+<div id="loadingOverlay"></div>
 
 <video playsinline="playsinline" class="video" autoplay="autoplay" muted="muted" loop="loop">
     <source src="image\Vid1.mp4" type="video/mp4">

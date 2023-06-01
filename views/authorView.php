@@ -1,6 +1,7 @@
 <?php 
 require_once 'partials/header.php';
 ?>
+<div id="loadingOverlay"></div>
 
 <h1 class="text-center mt-3"><?php echo $userInfos->getPseudo() ?></h1>
 <section class="container mt-5">

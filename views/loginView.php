@@ -1,6 +1,7 @@
 <?php
 require_once 'partials/header.php';
 ?>
+<div id="loadingOverlay"></div>
 <video playsinline="playsinline" class="video" autoplay="autoplay" muted="muted" loop="loop">
     <source src="image\vid3.mp4" type="video/mp4">
 </video>
