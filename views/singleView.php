@@ -20,10 +20,38 @@ require_once 'partials/header.php';
     </div>
     By <a href="author.php?id=<?php echo $author->getIdUser() ?>" id="author" class="muted"><?php echo $author->getPseudo() ?></a>
     <p class="mt-3 text-white h4"><?php echo $post->getContent() ?></p>
+    <div class="badge bg-primary mb-3">
+        Commentaires <span class="badge text-bg-secondary"><?php echo count($comments) ?></span>
+    </div>
+    </section>
+    <section class="comments">
+    <div id="comment">
+        <?php foreach($comments as $comment) { 
+            $commentAuthor = UserManager::getCommentAuthorByCommentId($comment->getIdComment());?>
+            <div>
+                <h3><?php echo $commentAuthor->getPseudo() ?></h3>
+                <span><?php echo $comment->getDate() ?></span>
+                <p><?php echo $comment->getContent() ?></p>
+            </div>
+            <?php } ?>
+    </div>
+        
+    <?php if(isset($_SESSION['user'])){ ?>
+            <div id="addcomment">
+                <form action="" method="post">
+                    <div class="mb-3">
+                        <label for="InputContent" class="form-label">Commenter</label>
+                        <textarea class="form-control" id="InputContent" name="content"></textarea>
+                        <input id="pseudo" type="hidden" value="<?php echo $_SESSION['user']['pseudo'] ?>">
+                    </div>
+                    <button class="btn btn-primary mt-3" type="submit">Soumettre le commentaire</button>
+                </form>
+    </div>
+            <?php } ?>
+            
+            
+            
 </section>
-
-
-
 
 <?php
 require_once 'partials/footer.php';

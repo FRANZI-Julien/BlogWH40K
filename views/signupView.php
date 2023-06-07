@@ -1,5 +1,26 @@
 <?php
 require_once 'partials/header.php';
+// Vérifier si le formulaire a été soumis
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    // Traiter les données du formulaire et effectuer l'enregistrement
+
+    // Afficher le popup de succès avec redirection vers login.php
+    echo '<div class="success-popup-container">';
+    echo '<div class="success-popup">';
+    echo '<div class="success-popup-content">';
+    echo '<h2>Enregistrement réussi !</h2>';
+    echo '<p>Votre compte a été créé avec succès.</p>';
+    echo '</div>';
+    echo '</div>';
+    echo '</div>';
+
+    // Redirection vers login.php après 3 secondes
+    echo '<script>
+        setTimeout(function() {
+            window.location.href = "login.php";
+        }, 3000);
+    </script>';
+}
 ?>
 <div id="loadingOverlay"></div>
 <video playsinline="playsinline" class="video" autoplay="autoplay" muted="muted" loop="loop">

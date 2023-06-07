@@ -16,7 +16,7 @@ class PostManager {
         return $posts;//puis on renvoie les résultats
     }
 
-    public static function getPostById($id) {
+    public static function getPostById($id) { //pour récupérer un seul article par son id
         $dbh = dbconnect();
         $query = ("SELECT * FROM post WHERE id_post = :id");
         $stmt = $dbh->prepare($query);
@@ -36,7 +36,7 @@ class PostManager {
         $posts = $stmt->fetchAll(PDO::FETCH_CLASS, 'Post');
         return $posts;
     }
-    
+
     public static function getPostsByUserId($id) {
         $dbh = dbconnect();
         $query = "SELECT * FROM post JOIN user ON user.id_user = post.id_user WHERE post.id_user = :id";
@@ -46,10 +46,10 @@ class PostManager {
         $posts = $stmt->fetchAll(PDO::FETCH_CLASS, 'Post');
         return $posts;
     }
+    
     public static function addPost($title, $picture, $content, $userId) {
         $dbh = dbconnect();
         $date = (new DateTime())->format('Y-m-d H:i:s');
-        var_dump($date);
         $query = "INSERT INTO post (title, date, picture, content, id_user) VALUES (:title, '$date', :picture, :content, :id_user)";
         $stmt = $dbh->prepare($query);
         $stmt->bindParam(':title', $title);
@@ -62,14 +62,40 @@ class PostManager {
 
     public static function addPostCategories($id_post, $id_category){
         $dbh  = dbconnect();
-        $query = "INSERT INTO t_post_category (id_post, id_category) VALUES (:post, :cat)";
+        $query = "INSERT INTO post_category (id_post, id_category) VALUES (:post, :cat)";
         $stmt = $dbh->prepare($query);
         $stmt->bindParam(':post', $id_post);
         $stmt->bindParam(':cat', $id_category);
         $stmt->execute();
     }
 
+    public static function editPost($id, $title, $picture, $content, $userId) {
+        $dbh = dbconnect();
+        $date = (new DateTime())->format('Y-m-d H:i:s');
+        $query = "UPDATE post SET title = :title, date = '$date', picture = :picture, content = :content, id_user = :id_user WHERE post.id_post = :id";
+        $stmt = $dbh->prepare($query);
+        $stmt->bindParam(':id', $id);
+        $stmt->bindParam(':title', $title);
+        $stmt->bindParam(':picture', $picture);
+        $stmt->bindParam(':content', $content);
+        $stmt->bindParam(':id_user', $userId);
+        $stmt->execute();
+    }
 
-
+    public static function deletePostCategoriesByPostId($id){
+        $dbh  = dbconnect();
+        $query = "DELETE FROM post_category WHERE post_category.id_post = :id";
+        $stmt = $dbh->prepare($query);
+        $stmt->bindParam(':id', $id);
+        $stmt->execute();
+    }
+        
+    public static function deletePost($id) {
+        $dbh  = dbconnect();
+        $query = "DELETE FROM post WHERE post.id_post = :id";
+        $stmt = $dbh->prepare($query);
+        $stmt->bindParam(':id', $id);
+        $stmt->execute();
+    }
 
 }

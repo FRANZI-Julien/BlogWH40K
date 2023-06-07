@@ -19,6 +19,7 @@ class CategoryManager {
         $query = "SELECT * FROM category WHERE id_category = :id";
         $stmt = $dbh->prepare($query);
         $stmt->bindParam(':id', $id);
+        $stmt->execute();
         $stmt->setFetchMode(PDO::FETCH_CLASS, 'Category');
         $category = $stmt->fetch();
         return $category;
@@ -32,6 +33,14 @@ class CategoryManager {
         $stmt->execute();
         $categories = $stmt->fetchAll(PDO::FETCH_CLASS, 'Category');
         return $categories; 
+    }
+
+    public static function addCategory($name){
+        $dbh = dbconnect();
+        $query = "INSERT INTO category (category_name) VALUES (:name)";
+        $stmt = $dbh->prepare($query);
+        $stmt->bindParam(':name', $name);
+        $stmt->execute();
     }
 
 }

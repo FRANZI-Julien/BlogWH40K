@@ -6,7 +6,7 @@ class UserManager {
 
     public static function getUserInfos($id){
         $dbh = dbconnect();
-        $query = "SELECT * FROM t_user WHERE id_user=:id";
+        $query = "SELECT * FROM user WHERE id_user=:id";
         $stmt = $dbh->prepare($query);
         $stmt->bindParam(':id', $id);
         $stmt->execute();
@@ -25,6 +25,18 @@ class UserManager {
         $user = $stmt->fetch();
         return $user;
     }
+
+    public static function getCommentAuthorByCommentId($id){
+        $dbh = dbconnect();
+        $query = "SELECT user.id_user, pseudo, email FROM t_comment JOIN user ON t_comment.id_user = user.id_user WHERE t_comment.id_comment = :id";
+        $stmt = $dbh->prepare($query);
+        $stmt->bindParam(':id', $id);
+        $stmt->execute();
+        $stmt->setFetchMode(PDO::FETCH_CLASS, 'User');
+        $user = $stmt->fetch();
+        return $user;
+    }
+
     public static function addUser($pseudo, $email, $mdp){
         $dbh = dbconnect();
         $query = "INSERT INTO user (pseudo, email, password) VALUES (:pseudo, :email, :mdp)";
@@ -54,9 +66,5 @@ class UserManager {
         ];
     }
 
-
 }
-
-
-
 

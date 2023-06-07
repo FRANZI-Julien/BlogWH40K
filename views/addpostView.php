@@ -19,7 +19,7 @@ require_once 'partials/header.php';
         </div>
         <div class="mb-3">
             <label for="InputContent" class="form-label">Contenu</label>
-            <textarea class="form-control" id="InputContent" name="content"></textarea>
+            <textarea class="form-control" id="InputContent" name="content"><?php echo isset($_POST['content']) ? nl2br($_POST['content']) : ''; ?></textarea>
         </div>
         <?php foreach($categories as $category){ ?>
         <div class="form-check">
